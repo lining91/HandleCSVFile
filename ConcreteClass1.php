@@ -1,8 +1,9 @@
 <?php
 require("ClassTemplate.php");
 
-//  该文件用于处理condition1,condition2,condition3,value1这种格式的情况,
-//  对具有相同condition1,condition2,condition3行的value1进行相加
+//  多个condition,多个value
+//  该文件用于处理condition1..,value1..这种格式的情况,
+//  对具有相同condition1..的value1..进行相加
 
 class ConcreteClass1 extends CAHandleFile{
     public $RowNum = 0;

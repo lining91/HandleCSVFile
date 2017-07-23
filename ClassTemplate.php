@@ -11,7 +11,7 @@ abstract class CAHandleFile
     public $title = "";
     public $newfilename = "";
     public $continueflag = true;
-    public $keynum = 0;
-    public $rowcount = 0;
+    public $keynum = 0;                 //  关键字列数
+    public $rowcount = 0;               //  文件具有的列数
 }
 ?>
