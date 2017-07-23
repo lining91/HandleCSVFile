@@ -3,9 +3,14 @@
     <meta charset="utf-8">
     <title>文件处理</title>
 </head>
-<body>
+<body style="margin-top: 100px;text-align:center" >
+    <div>
+        <h2>请输入文件路径<h2>
+    </div>
+
+    <div>
     <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
-        <h3><p style="margin-left: 100px">请输入文件路径</p><h3>
+        <h3><h3>
         路径1：<input type="text" name="filedir_1">
         <input type="submit" class = "btn" value="删除" name="deletedir_1"><br>
 
@@ -20,22 +25,25 @@
 
         路径5：<input type="text" name="filedir_5">
         <input type="submit" value="删除" name="deletedir_5"><br>
+        <br>
 
-        <br><br>
-        关键字列数：
+        <p style="margin-right: 140px">关键字列数：
         <select name="keynum">
             <option value="1">1</option>
             <option value="2">2</option>
             <option value="3">3</option>
         </select>
-        <br>
+        </p>
+
         新文件名字：<input type="text" name="newfilename">
         <br><br>
 
-        <p style="margin-left: 80px"><input type="submit" value="开始处理" name="handledir">
+        <p style="margin-left: 0px"><input type="submit" value="开始处理" name="handledir">
         <input type="submit" value="清空" name="cleardir">
         </p>
     </form>
+    </div>
+
 </body>
 <?php
 
@@ -56,7 +64,7 @@ function HandleFile( $filename ){
 function HandleDir(){
     if (!$_POST["newfilename"])
     {
-        echo "请输入要生成的新文件名！<br>";
+        echo "error : 请输入要生成的新文件名！<br>";
         return;
     }
 
@@ -75,7 +83,7 @@ function HandleDir(){
             if ( !file_exists(iconv( "UTF-8", "GBK", $temp )) )
             {
                 $flag = false;
-                echo $temp . " 无效文件路径. " . "<br>";
+                echo $temp . "error :  无效文件路径. " . "<br>";
             }
             else
                 $filename[sizeof($filename) + 1] = $temp;
@@ -97,7 +105,6 @@ function HandleDir(){
 
 if ($_SERVER["REQUEST_METHOD"] == "POST")
 {
-    echo $_POST["keynum"] . "<BR>";
     DeleteDir();
     HandleDir();
 }

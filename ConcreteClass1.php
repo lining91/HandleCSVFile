@@ -28,7 +28,7 @@ class ConcreteClass1 extends CAHandleFile{
 
         if ( $this->rowcount != $rowcount )
         {
-            echo "文件的列数不一样！" . " $this->rowcount, $rowcount。<br>";
+            echo "error : 文件的列数不一样！" . " $this->rowcount, $rowcount。<br>";
             $this->continueflag = false;
             return false;
         }
@@ -36,7 +36,7 @@ class ConcreteClass1 extends CAHandleFile{
         if ( $this->rowcount <= $this->keynum )
         {
             $this->continueflag = false;
-            echo "文件列数：" . $this->rowcount . ", 关键字列数：" . $this->keynum . "<br>";
+            echo "error : 文件列数：" . $this->rowcount . ", 关键字列数：" . $this->keynum . "<br>";
             return false;
         }
 
