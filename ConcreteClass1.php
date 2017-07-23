@@ -15,7 +15,6 @@ class ConcreteClass1 extends CAHandleFile{
     }
 
     public function IsValidRow($rowcount){
-        echo "IsValidRow : rowcount = " . $rowcount . "<br>";
         if ($rowcount == 0)
         {
             $this->continueflag = false;
@@ -40,7 +39,6 @@ class ConcreteClass1 extends CAHandleFile{
             return false;
         }
 
-        echo $this->rowcount . "<br>";
         return true;
     }
 
@@ -159,7 +157,6 @@ class ConcreteClass1 extends CAHandleFile{
             echo "文件路径：<br> " . $tempfile . "<br>";
             $fp = fopen(iconv( "UTF-8", "GBK", $tempfile ), "r+");
             $this->title = fgets($fp);
-            echo "title :  $this->title <br>";
             if ( !$this->IsValidRow(sizeof(explode(",", $this->title))) )
                 return;
             $valuenum = $this->rowcount - $this->keynum;
