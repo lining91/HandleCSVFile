@@ -5,23 +5,36 @@
 </head>
 <body>
     <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
-        请输入文件路径：<input type="text" name="filedir_1">
+        <h3><p style="margin-left: 100px">请输入文件路径</p><h3>
+        路径1：<input type="text" name="filedir_1">
         <input type="submit" class = "btn" value="删除" name="deletedir_1"><br>
 
-        请输入文件路径：<input type="text" name="filedir_2">
+        路径2：<input type="text" name="filedir_2">
         <input type="submit" value="删除" name="deletedir_2"><br>
 
-        请输入文件路径：<input type="text" name="filedir_3">
+        路径3：<input type="text" name="filedir_3">
         <input type="submit" value="删除" name="deletedir_3"><br>
 
-        请输入文件路径：<input type="text" name="filedir_4">
+        路径4：<input type="text" name="filedir_4">
         <input type="submit" value="删除" name="deletedir_4"><br>
 
-        请输入文件路径：<input type="text" name="filedir_5">
+        路径5：<input type="text" name="filedir_5">
         <input type="submit" value="删除" name="deletedir_5"><br>
 
-        <input type="submit" value="开始处理" name="handledir">
+        <br><br>
+        关键字列数：
+        <select name="keynum">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+        </select>
+        <br>
+        新文件名字：<input type="text" name="newfilename">
+        <br><br>
+
+        <p style="margin-left: 80px"><input type="submit" value="开始处理" name="handledir">
         <input type="submit" value="清空" name="cleardir">
+        </p>
     </form>
 </body>
 <?php
@@ -36,17 +49,19 @@ function DeleteDir(){
 
 function HandleFile( $filename ){
     require("ConcreteClass1.php");
-    $concrete1 = new ConcreteClass1($filename);
-    $concrete1->GetFileContent();
-    $concrete1->GenerateNewFile();
+    $concrete1 = new ConcreteClass1( $filename, $_POST["newfilename"], $_POST["keynum"] );
+    $concrete1->Handle();
 }
 
 function HandleDir(){
+    if (!$_POST["newfilename"])
+    {
+        echo "请输入要生成的新文件名！<br>";
+        return;
+    }
+
     if (!$_POST["handledir"])
         return;
-
-    for ( $idx = 1; $idx <= 5; $idx++ )
-        echo $_POST["filedir_" .  $idx] . "<br>";
 
     $flag = true;
     $filename = array();
@@ -55,22 +70,34 @@ function HandleDir(){
         $temp = $_POST["filedir_" .  $idx];
         if ($temp != "")
         {
-            if ( !file_exists($temp) )
+            $curDir = dirname(__FILE__);
+            $temp = $curDir . "\\" . $temp;
+            if ( !file_exists(iconv( "UTF-8", "GBK", $temp )) )
             {
                 $flag = false;
-                echo $temp . " is invalid file. " . "<br>";
+                echo $temp . " 无效文件路径. " . "<br>";
             }
             else
                 $filename[sizeof($filename) + 1] = $temp;
         }
     }
 
-    if ( $flag )
-        HandleFile($filename);
+    echo "<br>";
+    if ( !$flag )
+        return;
+
+    echo "待处理文件：<br>";
+    foreach ( $filename as $key => $value )
+        echo $value . "<br>";
+
+    echo "新文件名字：<br>" . $_POST["newfilename"] . "<br>";
+    echo "<br><br>";
+    HandleFile( $filename );
 }
 
 if ($_SERVER["REQUEST_METHOD"] == "POST")
 {
+    echo $_POST["keynum"] . "<BR>";
     DeleteDir();
     HandleDir();
 }
