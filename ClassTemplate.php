@@ -8,5 +8,4 @@ abstract class CAHandleFile
     public $filecontent = array();
     public $title = "";
 }
-
 ?>
